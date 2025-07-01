@@ -5,6 +5,8 @@ const indexRouter = require("./routes/indexRouter");
 const expressSession = require("express-session");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { PrismaClient } = require("./generated/prisma");
+const passport = require("passport")
+require("./middleware/passport");
 
 const app = express();
 
@@ -35,6 +37,9 @@ app.use(
     }),
   })
 );
+
+// initialize session
+app.use(passport.session());
 
 // Routes
 app.use("/", indexRouter);
