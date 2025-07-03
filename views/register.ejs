@@ -1,0 +1,21 @@
+<%- include("partials/header") %>
+
+<main>
+  <form action="/register" method="POST">
+    <h2>Register</h2>
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username" required />
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" required />
+    <label for="confirmation">Confirm Password</label>
+    <input type="password" name="confirmation" id="confirmation" />
+    <button type="submit">Create Account</button>
+    <% if (errors.length > 0) { %>
+        <% errors.forEach((error) => { %>
+            <p style="color: red"><%= error.msg %></p>
+        <% }) %>
+    <% } %>
+  </form>
+</main>
+
+<%- include("partials/footer") %>
