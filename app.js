@@ -12,6 +12,8 @@ require("./middleware/passport");
 const indexRouter = require("./routes/indexRouter");
 const loginRouter = require("./routes/loginRouter");
 const registerRouter = require("./routes/registerRouter");
+const dashboardRouter = require("./routes/dashboardRouter")
+const logoutRouter = require("./routes/logoutRouter")
 
 const app = express();
 
@@ -49,10 +51,27 @@ app.use(flash())
 // initialize session
 app.use(passport.session());
 
+// Authentication
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login");
+}
+
+// Make user available in all views
+app.use((req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+});
+
+
 // Routes
 app.use("/", indexRouter);
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);
+app.use("/dashboard", ensureAuthenticated, dashboardRouter)
+app.use("/logout", logoutRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`App running on port ${PORT}`));
