@@ -23,6 +23,30 @@ model Session {
 
 model User {
   id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
   username  String   @unique
   password  String
+  folders   Folder[] 
 }
+
+model Folder {
+  id        Int     @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  name      String
+  userId    Int
+  user      User    @relation(fields: [userId], references: [id])
+  files     File[]
+}
+
+model File {
+  id        Int     @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  fileUrl   String
+  folderId  Int     
+  folder    Folder  @relation(fields: [folderId], references: [id], onDelete: Cascade)
+}
+
+
