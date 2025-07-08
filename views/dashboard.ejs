@@ -1,20 +1,24 @@
 <%- include("partials/header") %>
 
 <div class="main-container">
-    <nav class="left-nav">
-        <button class="new-file">
-            New File
-        </button>
-        <button class="new-folder">
-            New Folder
-        </button>
-    </nav>
-    <main>
-        <h2>Welcome, <%= user.username %></h2>
-        <div class="folders-container">
-            
-        </div>
-    </main>
+  <nav class="left-nav">
+    <a class="nav-btn" href="/dashboard">Home</a>
+    <a class="nav-btn new-file" href="/dashboard/new-file">New File</a>
+    <a class="nav-btn new-folder" href="/dashboard/new-folder">New Folder</a>
+  </nav>
+
+  <main>
+    <% if (section === "new-folder") { %>
+      <%- include("partials/new-folder-form") %>
+    <% } else if (section === "new-file") { %>
+      <%- include("partials/new-file-form") %>
+    <% } else { %>
+      <h2>Welcome, <%= user.username %></h2>
+      <div class="folders-container">
+        
+      </div>
+    <% } %>
+  </main>
 </div>
 
 <%- include("partials/footer") %>
