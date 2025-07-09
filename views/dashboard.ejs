@@ -8,17 +8,68 @@
   </nav>
 
   <main>
-    <% if (section === "new-folder") { %>
-      <%- include("partials/new-folder-form") %>
-    <% } else if (section === "new-file") { %>
-      <%- include("partials/new-file-form") %>
-    <% } else { %>
-      <h2>Welcome, <%= user.username %></h2>
-      <div class="folders-container">
-        
+    <% if (section === "new-folder") { %> <%-
+    include("partials/new-folder-form") %> <% } else if (section === "new-file")
+    { %> <%- include("partials/new-file-form") %> <% } else { %>
+    <h2>Welcome, <%= user.username %></h2>
+    <div class="folders-container">
+      <% if (user.folders.length === 0) { %>
+      <p>No folders created yet.</p>
+      <% } else { %> <% user.folders.forEach((folder) => { %>
+      <div class="folder-item">
+        <a href="/dashboard/folder/<%= folder.id %>" class="folder-link">
+          <i class="fa-solid fa-folder"></i>
+          <span><%= folder.name %></span>
+        </a>
+        <div class="folder-actions">
+          <button class="action-btn" data-id="<%= folder.id %>">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+          </button>
+          <div class="action-menu hidden" id="menu-<%= folder.id %>">
+            <a href="/dashboard/folder/<%= folder.id %>/edit">Rename</a>
+            <form
+              action="/dashboard/folder/<%= folder.id %>/delete"
+              method="POST"
+            >
+              <button type="submit" class="delete-btn">Delete</button>
+            </form>
+          </div>
+        </div>
       </div>
+
+      <% }) %> <% } %>
+    </div>
     <% } %>
   </main>
 </div>
+
+<%# Toggle Logic // %>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".action-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const id = btn.dataset.id;
+        const menu = document.getElementById(`menu-${id}`);
+
+        // Hide all other menus
+        document.querySelectorAll(".action-menu").forEach(m => {
+          if (m !== menu) m.classList.add("hidden");
+        });
+
+        menu.classList.toggle("hidden");
+
+        // Close if clicking outside
+        document.addEventListener("click", function handler(ev) {
+          if (!menu.contains(ev.target) && ev.target !== btn) {
+            menu.classList.add("hidden");
+            document.removeEventListener("click", handler);
+          }
+        });
+      });
+    });
+  });
+</script>
+
 
 <%- include("partials/footer") %>

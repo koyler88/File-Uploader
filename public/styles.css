@@ -409,3 +409,96 @@ body.dark-mode .btn-cancel {
 body.dark-mode .btn-cancel:hover {
   background-color: #555;
 }
+
+.folders-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.folder-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+  position: relative;
+}
+
+.folder-link {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #111827;
+  flex-grow: 1;
+  gap: 0.5rem;
+}
+
+.folder-link:hover {
+  background-color: #e5e7eb;
+}
+
+.folder-link:focus,
+.folder-link:active {
+  outline: none;
+  background-color: transparent;
+}
+
+
+.folder-link i {
+  color: #2563eb;
+}
+
+.folder-actions {
+  position: relative;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+.action-menu {
+  position: absolute;
+  right: 0;
+  top: 120%;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  z-index: 10;
+}
+
+.action-menu a,
+.action-menu button {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 0.25rem 0.5rem;
+  color: #374151;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.action-menu a:hover,
+.action-menu button:hover {
+  background-color: #f3f4f6;
+  border-radius: 4px;
+}
+
+.hidden {
+  display: none;
+}

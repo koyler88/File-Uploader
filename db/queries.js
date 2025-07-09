@@ -42,9 +42,29 @@ const createUser = async (username, password) => {
   return newUser;
 }
 
+const createFolder = async (user, folderName) => {
+  await prisma.folder.create({
+    data: {
+      name: folderName,
+      userId: user.id
+    }
+  })
+
+  return true;
+}
+
+const getUserByIdWithFolders = async (id) => {
+  return await prisma.user.findUnique({
+    where: { id },
+    include: { folders: true },
+  });
+};
+
 module.exports = {
   getUserByUsername,
   getUserById,
   userTaken,
-  createUser
+  createUser,
+  createFolder,
+  getUserByIdWithFolders,
 };
