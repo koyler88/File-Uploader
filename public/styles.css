@@ -502,3 +502,47 @@ body.dark-mode .btn-cancel:hover {
 .hidden {
   display: none;
 }
+
+/* Dark mode overrides for folder list */
+body.dark-mode .folder-item {
+  background-color: #1e1e1e;
+  border: 1px solid #2c2c2c;
+}
+
+body.dark-mode .folder-link {
+  color: #e5e5e5;
+}
+
+body.dark-mode .folder-link:hover {
+  background-color: #2a2a2a;
+}
+
+body.dark-mode .folder-link i {
+  color: #8ab4f8;
+}
+
+body.dark-mode .action-btn {
+  color: #a1a1aa;
+}
+
+body.dark-mode .action-menu {
+  background-color: #2c2c2c;
+  border: 1px solid #3f3f46;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+}
+
+body.dark-mode .action-menu a,
+body.dark-mode .action-menu button {
+  color: #e5e5e5;
+}
+
+body.dark-mode .action-menu a:hover,
+body.dark-mode .action-menu button:hover {
+  background-color: #3f3f46;
+}
+
+.folder-item,
+.folder-link,
+.action-menu {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
