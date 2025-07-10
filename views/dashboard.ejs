@@ -8,14 +8,17 @@
   </nav>
 
   <main>
-    <% if (section === "new-folder") { %> <%-
-    include("partials/new-folder-form") %> <% } else if (section === "new-file")
-    { %> <%- include("partials/new-file-form") %> <% } else { %>
+    <% if (section === "new-folder") { %>
+      <%- include("partials/new-folder-form") %>
+    <% } else if (section === "new-file") { %>
+      <%- include("partials/new-file-form") %> 
+    <% } else { %>
     <h2>Welcome, <%= user.username %></h2>
     <div class="folders-container">
       <% if (user.folders.length === 0) { %>
       <p>No folders created yet.</p>
-      <% } else { %> <% user.folders.forEach((folder) => { %>
+      <% } else { %>
+        <% user.folders.forEach((folder) => { %>
       <div class="folder-item">
         <a href="/dashboard/folder/<%= folder.id %>" class="folder-link">
           <i class="fa-solid fa-folder"></i>
@@ -37,7 +40,8 @@
         </div>
       </div>
 
-      <% }) %> <% } %>
+      <% }) %>
+    <% } %>
     </div>
     <% } %>
   </main>

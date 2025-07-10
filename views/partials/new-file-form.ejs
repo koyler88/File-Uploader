@@ -1,0 +1,20 @@
+<section class="form-card">
+  <h2>Upload a New File</h2>
+  <% if (folders.length === 0) { %>
+    <h4>Folder needed to upload files...</h4>
+  <% } else { %>
+  <form action="/dashboard/create-file" method="POST" class="styled-form" enctype="multipart/form-data">
+    <input type="file" name="file"/>
+    <label for="folderId">Select Folder:</label>
+    <select name="folderId" id="folderId" required>
+        <% folders.forEach(folder => { %>
+            <option value="<%= folder.id %>"><%= folder.name %></option>
+        <% }); %>
+    </select>
+    <div class="form-actions">
+      <button type="submit">Upload File</button>
+      <a href="/dashboard" class="btn-cancel">Cancel</a>
+    </div>
+  </form>
+  <% } %>
+</section>
