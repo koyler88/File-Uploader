@@ -104,6 +104,14 @@ const renameFolder = async (folderId, newName) => {
   })
 }
 
+const deleteFolder = async (folderId) => {
+  return await prisma.folder.delete({
+    where: {
+      id: parseInt(folderId)
+    }
+  })
+}
+
 module.exports = {
   getUserByUsername,
   getUserById,
@@ -114,5 +122,6 @@ module.exports = {
   getFoldersByUserId,
   createFile,
   userOwnsFolder,
-  renameFolder
+  renameFolder,
+  deleteFolder
 };

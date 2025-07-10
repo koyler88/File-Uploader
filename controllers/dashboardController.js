@@ -57,3 +57,15 @@ exports.renameFolder = async (req, res) => {
         return res.send("You do not own this folder")
     }
 }
+
+exports.deleteFolder = async (req, res) => {
+    const userId = req.user.id
+    const folderId = req.params.id
+    
+    if (await db.userOwnsFolder(userId, folderId)) {
+        await db.deleteFolder(folderId)
+        res.redirect("/dashboard")
+    } else {
+        return res.send("You do not own this folder")
+    }
+}

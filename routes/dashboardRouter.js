@@ -15,6 +15,7 @@ dashboardRouter.post("/create-file", upload.single('file'), dashboardController.
 // Folder Editing
 dashboardRouter.get("/folder/:id/edit", dashboardController.editFileForm)
 dashboardRouter.post("/folder/:id/rename", dashboardController.renameFolder)
-
+// Folder Deletion
+dashboardRouter.post("/folder/:id/delete", dashboardController.deleteFolder)
 
 module.exports = dashboardRouter
