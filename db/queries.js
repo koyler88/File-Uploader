@@ -81,6 +81,29 @@ const createFile = async (file, folderId) => {
   return newFile;
 };
 
+const userOwnsFolder = async (userId, folderId) => {
+  const folder = await prisma.folder.findUnique({
+    where: {
+      id: parseInt(folderId)
+    }
+  })
+
+  if (folder.userId !== userId) {
+    return false;
+  }
+  return true;
+}
+
+const renameFolder = async (folderId, newName) => {
+  return await prisma.folder.update({
+    where: {
+      id: parseInt(folderId) },
+      data: {
+        name: newName
+      }
+  })
+}
+
 module.exports = {
   getUserByUsername,
   getUserById,
@@ -89,5 +112,7 @@ module.exports = {
   createFolder,
   getUserByIdWithFolders,
   getFoldersByUserId,
-  createFile
+  createFile,
+  userOwnsFolder,
+  renameFolder
 };

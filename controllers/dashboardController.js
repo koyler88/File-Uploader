@@ -1,3 +1,4 @@
+const { user } = require("../db/prismaClient")
 const db = require("../db/queries")
 
 exports.dashboardGet = async (req, res) => {
@@ -35,5 +36,24 @@ exports.createFile = async (req, res) => {
     } catch (error) {
         console.log(error)
         res.status(500).send("Failed to upload file")
+    }
+}
+
+exports.editFileForm = async (req, res) => {
+    const folders = await db.getFoldersByUserId(req.user.id)
+
+    res.render("dashboard", {user: req.user, section: 'edit-folder', folders: folders, idToEdit: parseInt(req.params.id)})
+}
+
+exports.renameFolder = async (req, res) => {
+    const userId = req.user.id
+    const folderId = req.params.id
+    const newName = req.body.newName
+
+    if ( await db.userOwnsFolder(userId, folderId)) {
+        await db.renameFolder(folderId, newName)
+        res.redirect("/dashboard")
+    } else {
+        return res.send("You do not own this folder")
     }
 }

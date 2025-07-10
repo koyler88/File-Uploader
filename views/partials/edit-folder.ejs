@@ -1,0 +1,35 @@
+<h2>Welcome, <%= user.username %></h2>
+<div class="folders-container">
+  <% if (folders.length === 0) { %>
+    <p>No folders created yet.</p>
+  <% } else { %>
+    <% folders.forEach((folder) => { %>
+      <% if (folder.id === idToEdit) { %>
+        <form action="/dashboard/folder/<%= folder.id %>/rename" method="POST" class="folder-item">
+          <i class="fa-solid fa-folder"></i>
+          <input type="text" name="newName" value="<%= folder.name %>" />
+          <button type="submit">Save</button>
+          <a href="/dashboard" class="btn-cancel">Cancel</a>
+        </form>
+      <% } else { %>
+        <div class="folder-item">
+          <a href="/dashboard/folder/<%= folder.id %>" class="folder-link">
+            <i class="fa-solid fa-folder"></i>
+            <span><%= folder.name %></span>
+          </a>
+          <div class="folder-actions">
+            <button class="action-btn" data-id="<%= folder.id %>">
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+            <div class="action-menu hidden" id="menu-<%= folder.id %>">
+              <a href="/dashboard/folder/<%= folder.id %>/edit">Rename</a>
+              <form action="/dashboard/folder/<%= folder.id %>/delete" method="POST">
+                <button type="submit" class="delete-btn">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    <% }) %>
+  <% } %>
+</div>
