@@ -49,7 +49,7 @@ exports.createFile = async (req, res) => {
     }
 }
 
-exports.editFileForm = async (req, res) => {
+exports.editFolderForm = async (req, res) => {
     const folders = await db.getFoldersByUserId(req.user.id)
 
     res.render("dashboard", {user: req.user, section: 'edit-folder', folders: folders, idToEdit: parseInt(req.params.id)})

@@ -13,7 +13,7 @@ dashboardRouter.post("/create-folder", dashboardController.createFolder)
 dashboardRouter.get("/new-file", dashboardController.newFileGet)
 dashboardRouter.post("/create-file", upload.single('file'), dashboardController.createFile)
 // Folder Editing
-dashboardRouter.get("/folder/:id/edit", dashboardController.editFileForm)
+dashboardRouter.get("/folder/:id/edit", dashboardController.editFolderForm)
 dashboardRouter.post("/folder/:id/rename", dashboardController.renameFolder)
 // Folder Deletion
 dashboardRouter.post("/folder/:id/delete", dashboardController.deleteFolder)
