@@ -68,12 +68,11 @@ const getFoldersByUserId = async (id) => {
   });
 };
 
-const createFile = async (file, folderId) => {
-  if (!file) throw new Error("No file uploaded");
+const createFile = async (cloudinaryUrl, folderId) => {
 
   const newFile = await prisma.file.create({
     data: {
-      fileUrl: `/data/uploads/${file.filename}`,
+      fileUrl: cloudinaryUrl,
       folderId: folderId,
     },
   });

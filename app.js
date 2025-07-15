@@ -5,15 +5,22 @@ const expressSession = require("express-session");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { PrismaClient } = require("./generated/prisma");
 const passport = require("passport");
-const flash = require("connect-flash")
+const flash = require("connect-flash");
 require("./middleware/passport");
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+})
 
 // Import Routers
 const indexRouter = require("./routes/indexRouter");
 const loginRouter = require("./routes/loginRouter");
 const registerRouter = require("./routes/registerRouter");
-const dashboardRouter = require("./routes/dashboardRouter")
-const logoutRouter = require("./routes/logoutRouter")
+const dashboardRouter = require("./routes/dashboardRouter");
+const logoutRouter = require("./routes/logoutRouter");
 
 const app = express();
 
@@ -46,7 +53,7 @@ app.use(
 );
 
 // Flash middleware
-app.use(flash())
+app.use(flash());
 
 // initialize session
 app.use(passport.session());
@@ -65,13 +72,12 @@ app.use((req, res, next) => {
   next();
 });
 
-
 // Routes
 app.use("/", indexRouter);
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);
-app.use("/dashboard", ensureAuthenticated, dashboardRouter)
-app.use("/logout", logoutRouter)
+app.use("/dashboard", ensureAuthenticated, dashboardRouter);
+app.use("/logout", logoutRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`App running on port ${PORT}`));

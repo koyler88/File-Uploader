@@ -1,5 +1,8 @@
 const { user } = require("../db/prismaClient")
 const db = require("../db/queries")
+const cloudinary = require("cloudinary").v2;
+const fs = require("fs")
+const path = require("path")
 
 exports.dashboardGet = async (req, res) => {
     const userWithFolders = await db.getUserByIdWithFolders(req.user.id)
@@ -30,7 +33,13 @@ exports.createFile = async (req, res) => {
             return res.status(400).send("No file uploaded")
         }
 
-        await db.createFile(req.file, parseInt(req.body.folderId))
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: `user_files/${req.user.id}`
+        });
+
+        fs.unlinkSync(req.file.path);
+
+        await db.createFile(result.secure_url, parseInt(req.body.folderId))
 
         res.redirect("/dashboard")
     } catch (error) {
