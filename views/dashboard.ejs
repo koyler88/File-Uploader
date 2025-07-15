@@ -14,7 +14,9 @@
       <%- include("partials/new-file-form") %> 
     <% } else if (section === 'edit-folder') { %>
       <%- include("partials/edit-folder") %>
-    <% } else { %>
+    <% } else if (section === 'view-folder') { %>
+      <%- include("partials/view-folder") %>
+      <% } else { %>
       <%- include("partials/dashboard-home") %>
     <% } %>
   </main>

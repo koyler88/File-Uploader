@@ -17,6 +17,17 @@ const getUserById = async (id) => {
   });
 };
 
+const getFolderById = async (id) => {
+  return await prisma.folder.findUnique({
+    where: {
+      id: parseInt(id)
+    },
+    include: {
+      files: true
+    }
+  })
+}
+
 const userTaken = async (username) => {
   const user = await prisma.user.findUnique({
     where: {
@@ -68,12 +79,15 @@ const getFoldersByUserId = async (id) => {
   });
 };
 
-const createFile = async (cloudinaryUrl, folderId) => {
+const createFile = async (cloudinaryUrl, publicId, folderId, file) => {
 
   const newFile = await prisma.file.create({
     data: {
       fileUrl: cloudinaryUrl,
+      publicId: publicId,
       folderId: folderId,
+      name: file.originalname,
+      size: file.size
     },
   });
 
@@ -122,5 +136,6 @@ module.exports = {
   createFile,
   userOwnsFolder,
   renameFolder,
-  deleteFolder
+  deleteFolder,
+  getFolderById
 };

@@ -34,12 +34,13 @@ exports.createFile = async (req, res) => {
         }
 
         const result = await cloudinary.uploader.upload(req.file.path, {
+            resource_type: "raw",
             folder: `user_files/${req.user.id}`
         });
 
         fs.unlinkSync(req.file.path);
 
-        await db.createFile(result.secure_url, parseInt(req.body.folderId))
+        await db.createFile(result.secure_url, result.public_id, parseInt(req.body.folderId), req.file)
 
         res.redirect("/dashboard")
     } catch (error) {
@@ -74,6 +75,18 @@ exports.deleteFolder = async (req, res) => {
     if (await db.userOwnsFolder(userId, folderId)) {
         await db.deleteFolder(folderId)
         res.redirect("/dashboard")
+    } else {
+        return res.send("You do not own this folder")
+    }
+}
+
+exports.viewFolder = async (req, res) => {
+    const userId = req.user.id
+    const folderId = req.params.id
+
+    if (await db.userOwnsFolder(userId, folderId)) {
+        const folder = await db.getFolderById(folderId)
+        return res.render("dashboard", {section: "view-folder", folder: folder})
     } else {
         return res.send("You do not own this folder")
     }

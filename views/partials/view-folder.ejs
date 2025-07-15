@@ -1,0 +1,29 @@
+<h2><%= folder.name %></h2>
+
+<div class="folders-container">
+  <% if (folder.files.length === 0) { %>
+    <p>No files to see here!</p>
+  <% } else { %>
+    <% folder.files.forEach((file) => { %>
+      <div class="folder-item">
+        <div class="folder-link">
+          <span><strong><%= file.name %></strong></span>
+        </div>
+
+        <div class="folder-actions">
+          <a href="<%= file.fileUrl %>" target="_blank" class="download-link">Download</a>
+          <button class="action-btn" data-id="<%= folder.id %>">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+          </button>
+
+          <div class="action-menu hidden" id="menu-<%= folder.id %>">
+            <a href="/dashboard/file/<%= file.id %>/details">Details</a>
+            <form action="/dashboard/file/<%= file.id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this file? This action cannot be undone.')">
+              <button type="submit" style="color: red" class="delete-btn">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  <% } %>
+</div>

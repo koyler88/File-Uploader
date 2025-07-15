@@ -44,7 +44,10 @@ model File {
   id        Int     @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+  name      String
+  size      Int
   fileUrl   String
+  publicId  String
   folderId  Int     
   folder    Folder  @relation(fields: [folderId], references: [id], onDelete: Cascade)
 }
