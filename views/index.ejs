@@ -4,8 +4,13 @@
     <h1>Welcome to Gloogle Drive</h1>
     <h2>Store and share files</h2>
 
-    <a href="/login">Log-In</a>
-    <a href="/register">Register</a>
+    <% if (!user) { %>
+        <a href="/login">Log-In</a>
+        <a href="/register">Register</a>
+    <% } else { %>
+        <p>You're logged in as <%= user.username %>.</p>
+        <a href="/dashboard">Go to Dashboard</a>
+    <% } %>
 </main>
 
 <%- include("partials/footer") %>
