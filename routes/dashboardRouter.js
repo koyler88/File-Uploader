@@ -19,5 +19,7 @@ dashboardRouter.post("/folder/:id/rename", dashboardController.renameFolder)
 dashboardRouter.post("/folder/:id/delete", dashboardController.deleteFolder)
 // Folder Viewing
 dashboardRouter.get("/folder/:id", dashboardController.viewFolder)
+// File Deletion
+dashboardRouter.post("/file/:id/delete", dashboardController.deleteFile)
 
 module.exports = dashboardRouter

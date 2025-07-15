@@ -80,6 +80,22 @@ exports.deleteFolder = async (req, res) => {
     }
 }
 
+exports.deleteFile = async (req, res) => {
+    const userId = req.user.id
+    const fileId = req.params.id
+    const file = await db.getFileById(fileId)
+
+    if (await db.userOwnsFile(userId, fileId)) {
+        await db.deleteFile(fileId)
+        await cloudinary.uploader.destroy(file.publicId, {
+            resource_type: "raw"
+        })
+        return res.redirect("/dashboard")
+    } else {
+        return res.send("You do not own this file")
+    }
+}
+
 exports.viewFolder = async (req, res) => {
     const userId = req.user.id
     const folderId = req.params.id

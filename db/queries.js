@@ -28,6 +28,14 @@ const getFolderById = async (id) => {
   })
 }
 
+const getFileById = async (id) => {
+  return await prisma.file.findUnique({
+    where: {
+      id: parseInt(id)
+    }
+  })
+}
+
 const userTaken = async (username) => {
   const user = await prisma.user.findUnique({
     where: {
@@ -107,6 +115,23 @@ const userOwnsFolder = async (userId, folderId) => {
   return true;
 }
 
+const userOwnsFile = async (userId, fileId) => {
+  const file = await prisma.file.findUnique({
+    where: {id: parseInt(fileId)},
+    include: {
+      folder: {
+        select: {
+          userId: true
+        }
+      }
+    }
+  })
+
+  if (!file) return false;
+
+  return file.folder.userId === userId;
+}
+
 const renameFolder = async (folderId, newName) => {
   return await prisma.folder.update({
     where: {
@@ -125,6 +150,14 @@ const deleteFolder = async (folderId) => {
   })
 }
 
+const deleteFile = async (fileId) => {
+  return await prisma.file.delete({
+    where: {
+      id: parseInt(fileId)
+    }
+  })
+}
+
 module.exports = {
   getUserByUsername,
   getUserById,
@@ -137,5 +170,8 @@ module.exports = {
   userOwnsFolder,
   renameFolder,
   deleteFolder,
-  getFolderById
+  getFolderById,
+  userOwnsFile,
+  deleteFile,
+  getFileById
 };
