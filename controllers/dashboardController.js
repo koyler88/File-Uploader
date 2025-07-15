@@ -55,6 +55,19 @@ exports.editFolderForm = async (req, res) => {
     res.render("dashboard", {user: req.user, section: 'edit-folder', folders: folders, idToEdit: parseInt(req.params.id)})
 }
 
+exports.fileDetails = async (req, res) => {
+    const userId = req.user.id
+    const fileId = parseInt(req.params.id)
+
+    if (await db.userOwnsFile(userId, fileId)) {
+        const file = await db.getFileById(fileId)
+
+        return res.render("dashboard", {user: req.user, section: "file-details", file: file})
+    } else {
+        return res.send("You do not own this file")
+    }
+}
+
 exports.renameFolder = async (req, res) => {
     const userId = req.user.id
     const folderId = req.params.id
